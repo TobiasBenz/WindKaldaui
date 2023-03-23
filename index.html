@@ -37,6 +37,21 @@
     });
     return windspeed;
         })();
+	var windgust = (function () {
+        var windgust = null;
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': 'http://daten.buergernetz.bz.it/services/meteo/v1/timeseries?station_code=88820MS&output_format=JSON&sensor_code=WG.BOE',
+        'dataType': "json",
+	'referrerPolicy': "http://daten.buergernetz.bz.it",
+        'success': function (data) {
+            windgust = data;
+        }
+    });
+    return windgust;
+        })();
+	    
        const ctx = document.getElementById('myChart');
         new Chart(ctx, {
           type: 'line',
@@ -50,10 +65,15 @@
       },
           data: {
             labels: windspeed.map(row => row.DATE),
-            datasets: [{
-              label: 'WindSpeed',
-              data: windspeed.map(row => row.VALUE*3.6)
-            }]
+            datasets: [
+		{
+		      label: 'WindSpeed',
+		      data: windspeed.map(row => row.VALUE*3.6),
+            },
+		    	label: 'WindGust',
+		    	data: windgust.map(row => row.VALUE*3.6),	  
+	    }
+	    ]
           },
           options: {
             scales: {
