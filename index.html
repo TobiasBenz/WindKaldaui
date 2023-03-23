@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WindInfo Kalterer See</title>
+	<script>
+		function fetchImage() {
+			// Get the image element
+			var img = document.getElementById("image");
+
+			// Set the image source to the URL of the image
+			img.src = "https://webcams.kaltern.com/webcam-kalterer-see/current.jpg";
+
+			// Set a timeout to fetch the image again in 5 minutes
+			setTimeout(fetchImage, 2 * 60 * 1000);
+		}
+        
+	</script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+</head>
+<body onload="fetchImage()">
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+    <script>
+        var data = (function () {
+        var data = null;
+    $.ajax({
+        'async': false,
+        'global': false,
+        'url': 'http://daten.buergernetz.bz.it/services/meteo/v1/timeseries?station_code=88820MS&output_format=JSON&sensor_code=WG',
+        'dataType': "json",
+        'success': function (json) {
+            data = json;
+        }
+    });
+    return data;
+        })();
+       const ctx = document.getElementById('myChart');
+        new Chart(ctx, {
+          type: 'line',
+          options: {
+        animation: false,
+        plugins: {
+          legend: {
+            display: false
+          }
+        }
+      },
+          data: {
+            labels: data.map(row => row.DATE),
+            datasets: [{
+              label: 'Date',
+              data: data.map(row => row.VALUE*3.6)
+            }]
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+      </script>
+      <div>
+        <img id="image" />
+      </div>
+</body>
+</html>
+
