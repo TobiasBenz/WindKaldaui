@@ -23,19 +23,19 @@
         <canvas id="myChart"></canvas>
     </div>
     <script>
-        var data = (function () {
-        var data = null;
+        var windspeed = (function () {
+        var windspeed = null;
     $.ajax({
         'async': false,
         'global': false,
         'url': 'http://daten.buergernetz.bz.it/services/meteo/v1/timeseries?station_code=88820MS&output_format=JSON&sensor_code=WG',
         'dataType': "json",
 	'referrerPolicy': "http://daten.buergernetz.bz.it",
-        'success': function (json) {
-            data = json;
+        'success': function (data) {
+            windspeed = data;
         }
     });
-    return data;
+    return windspeed;
         })();
        const ctx = document.getElementById('myChart');
         new Chart(ctx, {
@@ -49,10 +49,10 @@
         }
       },
           data: {
-            labels: data.map(row => row.DATE),
+            labels: windspeed.map(row => row.DATE),
             datasets: [{
-              label: 'Date',
-              data: data.map(row => row.VALUE*3.6)
+              label: 'WindSpeed',
+              data: windspeed.map(row => row.VALUE*3.6)
             }]
           },
           options: {
