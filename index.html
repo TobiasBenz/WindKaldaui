@@ -59,13 +59,16 @@
         animation: false,
         plugins: {
           legend: {
-            display: false,
-		  reverse: true
+            display: false
           }
         },
             scales: {
               y: {
                 beginAtZero: true
+              },
+		    x:{
+                type: 'time',
+			    reverse: 'true',
               }
             }
       },
