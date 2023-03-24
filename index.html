@@ -59,7 +59,8 @@
         animation: false,
         plugins: {
           legend: {
-            display: false
+            display: false,
+		  reverse: true
           }
         }
       },
@@ -80,11 +81,13 @@
             scales: {
               y: {
                 beginAtZero: true
-              }
-            },
-		legend: {
-		    reverse: true
-			}
+              }, 
+		    x: {
+                type: 'time',
+                time: {
+                    unit: 'day'
+                }
+            }
           }
         });
       </script>
