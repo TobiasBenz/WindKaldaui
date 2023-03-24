@@ -62,7 +62,12 @@
             display: false,
 		  reverse: true
           }
-        }
+        },
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
       },
           data: {
             labels: windspeed.map(row => row.DATE),
@@ -76,13 +81,6 @@
 		    	data: windgust.map(row => row.VALUE*3.6),	  
 	    }
 	    ]
-          },
-          options: {
-            scales: {
-              y: {
-                beginAtZero: true
-              }
-            }
           }
         });
       </script>
